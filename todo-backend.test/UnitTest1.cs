@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace todo_backend.test
+namespace todobackend.test
 {
     [TestClass]
     public class UnitTest1

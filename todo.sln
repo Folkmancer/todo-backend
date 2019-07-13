@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todo-backend", "todo-backend\todo-backend.csproj", "{93675801-886F-49E3-833E-669CDC9540D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todo-backend.test", "todo-backend.test\todo-backend.test.csproj", "{8E31FCBB-D787-4511-9D56-6B25AC6CDEC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todobackend.test", "todo-backend.test\todobackend.test.csproj", "{8E31FCBB-D787-4511-9D56-6B25AC6CDEC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
