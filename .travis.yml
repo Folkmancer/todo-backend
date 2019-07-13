@@ -3,7 +3,7 @@ sudo: required
 dist: bionic
 mono: none
 dotnet: 2.2
-solution: todo-backend.sln
+solution: todobackend.sln
 script:
   - dotnet restore
   - dotnet test
