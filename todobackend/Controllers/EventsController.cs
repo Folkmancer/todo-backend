@@ -8,37 +8,39 @@ using Microsoft.AspNetCore.Mvc;
 namespace todobackend.Controllers
 {
     [Produces("application/json")]
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/events")]
     public class EventsController : ControllerBase
     {
-        // GET: api/events
+        // GET: events
         [HttpGet]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "events1", "events2" };
         }
 
-        // GET: api/events/{id}
+        // GET: events/{id}
         [HttpGet("{id}", Name = "Get")]
         public async Task<string> Get(int id)
         {
-            return "value";
+            return "events1";
         }
 
-        // POST: api/events
+        // POST: events
         [HttpPost]
         public async Task Post([FromBody] string value)
         {
         }
 
-        // PUT: api/events/{id}
+        // PUT: events/{id}
         [HttpPut("{id}")]
         public async Task Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE: api/events/{id}
+        // DELETE: events/{id}
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {
