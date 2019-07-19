@@ -14,9 +14,9 @@ namespace todobackend
         /// Initializes a new instance of the <see cref="ConfigureSwaggerOptions"/> class.
         /// </summary>
         /// <param name="provider">The <see cref="IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+        /// <returns></returns>
         public ConfigureSwaggerOptions(IApiVersionDescriptionProvider provider) => this.provider = provider;
 
-        /// <inheritdoc />
         public void Configure(SwaggerGenOptions options)
         {
             // add a swagger document for each discovered API version
@@ -36,12 +36,10 @@ namespace todobackend
                 Description = "API для будущего TODO",
                 Contact = new OpenApiContact() { Name = "Folkmancer", Email = "folkmancer@gmail.com" }
             };
-
             if (description.IsDeprecated)
             {
-                info.Description += " This API version has been deprecated.";
+                info.Description += "This API version has been deprecated.";
             }
-
             return info;
         }
     }
