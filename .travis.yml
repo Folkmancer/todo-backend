@@ -9,4 +9,5 @@ script:
   - dotnet test
 branches:
   only:
+  - develop
   - master
