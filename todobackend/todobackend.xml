@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>todobackend</name>
+    </assembly>
+    <members>
+        <member name="M:todobackend.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:todobackend.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="provider">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+            <returns></returns>
+        </member>
+        <member name="M:todobackend.Controllers.EventsController.GetAllEvents">
+            <summary>
+            Get all events
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:todobackend.Controllers.EventsController.GetById(System.Int64)">
+            <summary>
+            Gets a specific event by id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:todobackend.Controllers.EventsController.Create(todobackend.Models.Event)">
+            <summary>
+            Creates a event.
+            </summary>
+            <param name="eventItem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:todobackend.Controllers.EventsController.UpdateById(System.Int64,todobackend.Models.Event)">
+            <summary>
+            Updates a specific event by id.
+            </summary>
+            <param name="id"></param>
+            <param name="eventItem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:todobackend.Controllers.EventsController.DeleteById(System.Int64)">
+            <summary>
+            Deletes a specific event by id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
