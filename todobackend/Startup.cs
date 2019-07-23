@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Reflection;
+using System.IO;
+using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -42,7 +45,16 @@ namespace todobackend
                     options.SubstituteApiVersionInUrl = true;
                 });
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-            services.AddSwaggerGen();
+            //services.AddSwaggerGen();
+            services.AddSwaggerGen(
+                options =>
+                {
+                    // add a custom operation filter which sets default values
+                    options.OperationFilter<SwaggerDefaultValues>();
+
+                    // integrate xml comments
+                    options.IncludeXmlComments(XmlCommentsFilePath);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +75,14 @@ namespace todobackend
                     options.RoutePrefix = string.Empty;
                 });
             app.UseMvc();
+        }
+        
+        static string XmlCommentsFilePath {
+            get {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                return xmlPath;
+            }
         }
     }
 }
