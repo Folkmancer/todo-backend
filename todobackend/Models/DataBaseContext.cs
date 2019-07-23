@@ -8,11 +8,13 @@ namespace todobackend.Models
 {
     public class DataBaseContext : DbContext
     {
+        public DataBaseContext() { }
+
         public DataBaseContext(DbContextOptions<DataBaseContext> options) 
             : base(options)
         {
         }
 
-        public DbSet<Event> Events { get; set; } 
+        public virtual DbSet<Event> Events { get; set; } 
     }
 }
