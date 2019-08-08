@@ -16,10 +16,11 @@ namespace todobackend.Controllers
     public class EventsController : ControllerBase
     {
         private readonly DataBaseContext dataBaseContext;
-#if DEBUG
+
         public EventsController(DataBaseContext context)
         {
             dataBaseContext = context;
+#if DEBUG
             if (dataBaseContext.Events.Count() == 0)
             {
                 DateTimeFormatInfo ru = new CultureInfo("ru-ru").DateTimeFormat;
@@ -45,8 +46,9 @@ namespace todobackend.Controllers
                 dataBaseContext.Events.AddRange(temp);
                 dataBaseContext.SaveChanges();
             }
+#endif
         }
-#endif      
+              
         /// <summary>
         /// Get all events
         /// </summary>
