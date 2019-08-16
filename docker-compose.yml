@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  todobackend:
+    image: ${DOCKER_REGISTRY-}todobackend
+    build:
+      context: .
+      dockerfile: todobackend/Dockerfile
