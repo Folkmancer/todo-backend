@@ -9,9 +9,9 @@ using System.Globalization;
 
 namespace todobackend.Controllers
 {
-    [Produces("application/json")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Produces("application/json")]
     [Route("v{version:apiVersion}/events")]
     public class EventsController : ControllerBase
     {
@@ -56,7 +56,7 @@ namespace todobackend.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<Event>>> GetAllEvents(int? page = null, int? size = 5)
+        public async Task<ActionResult<IEnumerable<EventProxy>>> GetAllEvents(int? page = null, int? size = 5)
         {
             if (dataBaseContext.Events.Count() == 0)
             {
@@ -64,9 +64,9 @@ namespace todobackend.Controllers
             }
             if (!page.HasValue)
             {
-                return await dataBaseContext.Events.ToListAsync();
+                return await dataBaseContext.Events.Select(x => new EventProxy(x)).ToListAsync();
             }
-            return await dataBaseContext.Events.Skip(((int)page - 1) * (int)size).Take((int)size).ToListAsync();
+            return await dataBaseContext.Events.Skip(((int)page - 1) * (int)size).Take((int)size).Select(x => new EventProxy(x)).ToListAsync();
         }
 
         /// <summary>
@@ -75,38 +75,40 @@ namespace todobackend.Controllers
         /// <param name="id"></param>
         /// <returns>Returns the event with the specified id</returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EventProxy), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Event>> GetById(long id)
+        public async Task<ActionResult<EventProxy>> GetById(long id)
         {
             var eventItem = await dataBaseContext.Events.FindAsync(id);
             if (eventItem == null)
             {
                 return NotFound();
             }
-            return eventItem;
+            return new EventProxy(eventItem);
         }
 
         /// <summary>
         /// Creates a event.
         /// </summary>
         /// <param name="eventItem"></param>
+        /// <param name="apiVersion"></param>
         /// <returns>A newly created event</returns>
         /// <response code="201">Returns the newly created item</response>
         /// <response code="400">If the item is null</response>   
         [HttpPost]
-        [ProducesResponseType(typeof(Event), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(EventProxy), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Event>> Create(Event eventItem)
+        public async Task<ActionResult<EventProxy>> Create([FromBody] EventProxy eventItem, ApiVersion apiVersion)
         {
             if (await dataBaseContext.Events.AnyAsync(x => x.Id == eventItem.Id))
             {
                 return BadRequest();
             }
             //await dataBaseContext.Events.AddAsync(eventItem);
-            dataBaseContext.Events.Add(eventItem);
+            dataBaseContext.Events.Add(new Event(eventItem));
             await dataBaseContext.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = eventItem.Id }, eventItem);
+            return CreatedAtAction(nameof(GetById), new { id = eventItem.Id, version = apiVersion.ToString() }, eventItem);
         }
 
         /// <summary>
@@ -119,7 +121,7 @@ namespace todobackend.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateById(long id, Event eventItem)
+        public async Task<IActionResult> UpdateById(long id, EventProxy eventItem)
         {
             if (dataBaseContext.Events.Count() == 0)
             {
@@ -129,7 +131,7 @@ namespace todobackend.Controllers
             {
                 return BadRequest();
             }
-            dataBaseContext.Entry(eventItem).State = EntityState.Modified;
+            dataBaseContext.Entry(new Event(eventItem)).State = EntityState.Modified;
             await dataBaseContext.SaveChangesAsync();
             return Ok();
         }
