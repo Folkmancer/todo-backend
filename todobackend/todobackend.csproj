@@ -6,10 +6,19 @@
     <RootNamespace>todobackend</RootNamespace>
     <UserSecretsId>4ba5d2a7-b876-4ecd-9b81-f017ea89dede</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='AnyCPU'">
     <DocumentationFile>todobackend.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Users\Folkmancer\OneDrive\Repository\todo-backend\todobackend\todobackend.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Users\Folkmancer\OneDrive\Repository\todo-backend\todobackend\todobackend.xml</DocumentationFile>
   </PropertyGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
