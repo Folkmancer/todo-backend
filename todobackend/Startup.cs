@@ -26,7 +26,8 @@ namespace todobackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataBaseContext>(options => options.UseInMemoryDatabase("TodoList"));
+            //services.AddDbContext<DataBaseContext>(options => options.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<DataBaseContext>(options => options.UseNpgsql(Configuration.GetConnectionString("MigrationConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddApiVersioning(
                 options =>
@@ -58,7 +59,7 @@ namespace todobackend
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider, DataBaseContext context)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -74,6 +75,7 @@ namespace todobackend
                     }
                     options.RoutePrefix = string.Empty;
                 });
+            context.Database.Migrate();
             app.UseMvc();
         }
         

@@ -19,7 +19,7 @@ namespace todobackend.Controllers
 
         public EventsController(DataBaseContext context)
         {
-            dataBaseContext = context;
+            dataBaseContext = context;/*
 #if DEBUG
             if (dataBaseContext.Events.Count() == 0)
             {
@@ -46,7 +46,7 @@ namespace todobackend.Controllers
                 dataBaseContext.Events.AddRange(temp);
                 dataBaseContext.SaveChanges();
             }
-#endif
+#endif*/
         }
               
         /// <summary>
