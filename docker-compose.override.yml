@@ -4,15 +4,9 @@ services:
   todobackend:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_HTTPS_PORT=44357
       - CUSTOMCONNSTR_MigrationConnection=User ID=app;Password=app;Server=postgres;Port=5432;Database=mydbname;Integrated Security=true;Pooling=true;
     ports:
       - "63647:80"
-      - "44357:443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   postgres:
     restart: always
