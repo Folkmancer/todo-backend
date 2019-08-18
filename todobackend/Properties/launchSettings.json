@@ -14,7 +14,8 @@
       "launchBrowser": true,
       "launchUrl": "v1/events",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "CUSTOMCONNSTR_MigrationConnection": "User ID=app;Password=app;Server=postgres;Port=5432;Database=mydbname;Integrated Security=true;Pooling=true;"
       }
     },
     "Docker": {
