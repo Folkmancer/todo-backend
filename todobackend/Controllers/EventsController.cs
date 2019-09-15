@@ -19,34 +19,7 @@ namespace todobackend.Controllers
 
         public EventsController(DataBaseContext context)
         {
-            dataBaseContext = context;/*
-#if DEBUG
-            if (dataBaseContext.Events.Count() == 0)
-            {
-                DateTimeFormatInfo ru = new CultureInfo("ru-ru").DateTimeFormat;
-                // Create a new TodoItem if collection is empty,
-                // which means you can't delete all TodoItems.
-                var temp = new Event[] {
-                    new Event { Id = 1, Description = "Test1", DeadlineDate = System.DateTimeOffset.Parse("22.06.2019", ru), IsComplete = false },
-                    new Event { Id = 2, Description = "Test2", DeadlineDate = System.DateTimeOffset.Parse("13.02.2019", ru), IsComplete = false },
-                    new Event { Id = 3, Description = "Test3", DeadlineDate = System.DateTimeOffset.Parse("14.06.2019", ru), IsComplete = false },
-                    new Event { Id = 4, Description = "Test4", DeadlineDate = System.DateTimeOffset.Parse("03.01.2019", ru), IsComplete = false },
-                    new Event { Id = 5, Description = "Test5", DeadlineDate = System.DateTimeOffset.Parse("19.06.2019", ru), IsComplete = false },
-                    new Event { Id = 6, Description = "Test6", DeadlineDate = System.DateTimeOffset.Parse("01.06.2019", ru), IsComplete = false },
-                    new Event { Id = 7, Description = "Test7", DeadlineDate = System.DateTimeOffset.Parse("02.06.2019", ru), IsComplete = false },
-                    new Event { Id = 8, Description = "Test8", DeadlineDate = System.DateTimeOffset.Parse("06.09.2019", ru), IsComplete = false },
-                    new Event { Id = 9, Description = "Test9", DeadlineDate = System.DateTimeOffset.Parse("07.11.2019", ru), IsComplete = false },
-                    new Event { Id = 10, Description = "Test10", DeadlineDate = System.DateTimeOffset.Parse("01.11.2019", ru), IsComplete = false },
-                    new Event { Id = 11, Description = "Test11", DeadlineDate = System.DateTimeOffset.Parse("11.06.2019", ru), IsComplete = false },
-                    new Event { Id = 12, Description = "Test12", DeadlineDate = System.DateTimeOffset.Parse("18.12.2019", ru), IsComplete = false },
-                    new Event { Id = 13, Description = "Test13", DeadlineDate = System.DateTimeOffset.Parse("16.06.2019", ru), IsComplete = false },
-                    new Event { Id = 14, Description = "Test14", DeadlineDate = System.DateTimeOffset.Parse("15.06.2019", ru), IsComplete = false },
-                    new Event { Id = 15, Description = "Test15", DeadlineDate = System.DateTimeOffset.Parse("04.12.2019", ru), IsComplete = false }
-                };
-                dataBaseContext.Events.AddRange(temp);
-                dataBaseContext.SaveChanges();
-            }
-#endif*/
+            dataBaseContext = context;
         }
               
         /// <summary>
