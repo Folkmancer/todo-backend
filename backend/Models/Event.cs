@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace todobackend.Models
+namespace backend.Models
 {
     public class Event
     {
