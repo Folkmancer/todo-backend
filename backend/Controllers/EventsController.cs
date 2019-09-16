@@ -77,7 +77,6 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
-            //await dataBaseContext.Events.AddAsync(eventItem);
             dataBaseContext.Events.Add(new Event(eventItem));
             await dataBaseContext.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = eventItem.Id, version = apiVersion.ToString() }, eventItem);
