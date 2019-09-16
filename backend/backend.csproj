@@ -3,26 +3,26 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <RootNamespace>todobackend</RootNamespace>
+    <RootNamespace>backend</RootNamespace>
     <UserSecretsId>4ba5d2a7-b876-4ecd-9b81-f017ea89dede</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='AnyCPU'">
-    <DocumentationFile>todobackend.xml</DocumentationFile>
+    <DocumentationFile>backend.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Users\Folkmancer\OneDrive\Repository\todo-backend\todobackend\todobackend.xml</DocumentationFile>
+    <DocumentationFile>D:\Users\Folkmancer\OneDrive\Repository\todo-backend\backend\backend.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\Users\Folkmancer\OneDrive\Repository\todo-backend\todobackend\todobackend.xml</DocumentationFile>
+    <DocumentationFile>D:\Users\Folkmancer\OneDrive\Repository\todo-backend\backend\backend.xml</DocumentationFile>
   </PropertyGroup>
 
   <Target Name="PrepublishScript" BeforeTargets="PrepareForPublish">
     <ItemGroup>
-      <DocFile Include="todobackend.xml" />
+      <DocFile Include="backend.xml" />
     </ItemGroup>
     <Copy SourceFiles="@(DocFile)" DestinationFolder="$(PublishDir)" SkipUnchangedFiles="false" />
   </Target>

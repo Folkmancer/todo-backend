@@ -4,10 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using todobackend.Controllers;
-using todobackend.Models;
+using backend.Controllers;
+using backend.Models;
 
-namespace todobackend.test
+namespace backend.test
 {
     [TestClass]
     public class EventsControllerUnitTest
