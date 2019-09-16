@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>backend</name>
+    </assembly>
+    <members>
+        <member name="M:backend.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:backend.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="provider">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+            <returns></returns>
+        </member>
+        <member name="M:backend.Controllers.EventsController.GetAllEvents(System.Nullable{System.Int32},System.Nullable{System.Int32})">
+            <summary>
+            Get all events
+            </summary>
+            <returns>All events</returns>
+        </member>
+        <member name="M:backend.Controllers.EventsController.GetById(System.Int64)">
+            <summary>
+            Gets a specific event by id.
+            </summary>
+            <param name="id"></param>
+            <returns>Returns the event with the specified id</returns>
+        </member>
+        <member name="M:backend.Controllers.EventsController.Create(backend.Models.EventProxy,Microsoft.AspNetCore.Mvc.ApiVersion)">
+            <summary>
+            Creates a event.
+            </summary>
+            <param name="eventItem"></param>
+            <param name="apiVersion"></param>
+            <returns>A newly created event</returns>
+            <response code="201">Returns the newly created item</response>
+            <response code="400">If the item is null</response>   
+        </member>
+        <member name="M:backend.Controllers.EventsController.UpdateById(System.Int64,backend.Models.EventProxy)">
+            <summary>
+            Updates a specific event by id.
+            </summary>
+            <param name="id"></param>
+            <param name="eventItem"></param>
+            <returns>Status code</returns>
+        </member>
+        <member name="M:backend.Controllers.EventsController.DeleteById(System.Int64)">
+            <summary>
+            Deletes a specific event by id.
+            </summary>
+            <param name="id"></param>
+            <returns>Status code</returns>
+        </member>
+        <member name="T:backend.SwaggerDefaultValues">
+            <summary>
+            Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
+            </summary>
+            <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
+            Once they are fixed and published, this class can be removed.</remarks>
+        </member>
+        <member name="M:backend.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation using the given context.
+            </summary>
+            <param name="operation">The operation to apply the filter to.</param>
+            <param name="context">The current operation filter context.</param>
+        </member>
+    </members>
+</doc>
