@@ -1,19 +1,23 @@
+using backend.Controllers;
+using backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using backend.Controllers;
-using backend.Models;
 
 namespace backend.test
 {
     [TestClass]
     public class EventsControllerUnitTest
-    {
+    {  
         private IQueryable<Event> GetTestEvents()
         {
+            var culture = CultureInfo.CreateSpecificCulture("ru-RU");
+            Thread.CurrentThread.CurrentCulture = culture;
             return new Event[] {
                     new Event { Id = 1, Description = "Test1", DeadlineDate = System.DateTimeOffset.Parse("12.06.2019"), IsComplete = false },
                     new Event { Id = 2, Description = "Test2", DeadlineDate = System.DateTimeOffset.Parse("13.02.2019"), IsComplete = false },
