@@ -7,7 +7,6 @@ namespace backend.Models
 {
     public class Event
     {
-        
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -20,6 +19,7 @@ namespace backend.Models
         public Event() { }
         public Event(EventView element)
         {
+            this.Id = element.Id;
             this.Description = element.Description;
             this.DeadlineDate = (element.DeadlineDate.HasValue) ? DateTimeOffset.FromUnixTimeSeconds(element.DeadlineDate.Value) : default;
             this.IsComplete = this.IsComplete;

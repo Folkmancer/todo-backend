@@ -1,8 +1,10 @@
-﻿namespace backend.Models
+﻿using System;
+
+namespace backend.Models
 {
     public class EventView
     {
-        public long Id { get; set; }
+        public Guid Id { get; set; }
         public string Description { get; set; }
         public long? DeadlineDate { get; set; }
         public bool IsComplete { get; set; }
