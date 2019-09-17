@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace backend.Migrations
 {
@@ -12,8 +11,7 @@ namespace backend.Migrations
                 name: "Events",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     DeadlineDate = table.Column<DateTimeOffset>(nullable: true),
                     IsComplete = table.Column<bool>(nullable: false)
