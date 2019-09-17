@@ -28,7 +28,7 @@ namespace backend.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<EventProxy>>> GetAllEvents(int? page = null, int? size = 5)
+        public async Task<ActionResult<IEnumerable<EventView>>> GetAllEvents(int? page = null, int? size = 5)
         {
             if (dataBaseContext.Events.Count() == 0)
             {
@@ -36,9 +36,9 @@ namespace backend.Controllers
             }
             if (!page.HasValue)
             {
-                return await dataBaseContext.Events.Select(x => new EventProxy(x)).ToListAsync();
+                return await dataBaseContext.Events.Select(x => new EventView(x)).ToListAsync();
             }
-            return await dataBaseContext.Events.Skip(((int)page - 1) * (int)size).Take((int)size).Select(x => new EventProxy(x)).ToListAsync();
+            return await dataBaseContext.Events.Skip(((int)page - 1) * (int)size).Take((int)size).Select(x => new EventView(x)).ToListAsync();
         }
 
         /// <summary>
@@ -47,17 +47,17 @@ namespace backend.Controllers
         /// <param name="id"></param>
         /// <returns>Returns the event with the specified id</returns>
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(EventProxy), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(EventView), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<EventProxy>> GetById(long id)
+        public async Task<ActionResult<EventView>> GetById(long id)
         {
             var eventItem = await dataBaseContext.Events.FindAsync(id);
             if (eventItem == null)
             {
                 return NotFound();
             }
-            return new EventProxy(eventItem);
+            return new EventView(eventItem);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace backend.Controllers
         /// <response code="201">Returns the newly created item</response>
         /// <response code="400">If the item is null</response>   
         [HttpPost]
-        [ProducesResponseType(typeof(EventProxy), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(EventView), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<EventProxy>> Create([FromBody] EventProxy eventItem, ApiVersion apiVersion)
+        public async Task<ActionResult<EventView>> Create([FromBody] EventView eventItem, ApiVersion apiVersion)
         {
             if (await dataBaseContext.Events.AnyAsync(x => x.Id == eventItem.Id))
             {
@@ -92,7 +92,7 @@ namespace backend.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateById(long id, EventProxy eventItem)
+        public async Task<IActionResult> UpdateById(long id, EventView eventItem)
         {
             if (dataBaseContext.Events.Count() == 0)
             {

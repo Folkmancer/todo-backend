@@ -15,7 +15,7 @@ namespace backend.Models
         public bool IsComplete { get; set; }
 
         public Event() { }
-        public Event(EventProxy element)
+        public Event(EventView element)
         {
             this.Id = element.Id;
             this.Description = element.Description;
