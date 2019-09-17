@@ -47,7 +47,7 @@ namespace backend.test
             using (var context = new DataBaseContext(options))
             {
                 var service = new EventsController(context);
-                await service.Create(new EventProxy(GetTestEvents().First()), new ApiVersion(1, 0));
+                await service.Create(new EventView(GetTestEvents().First()), new ApiVersion(1, 0));
                 context.SaveChanges();
             }
 
