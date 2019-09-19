@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  todobackend:
+    container_name: 'todobackend'
+    image: ${DOCKER_REGISTRY-}todobackend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      - "postgres"
+    networks:
+      - todobackend-network
+
+  postgres:
+    container_name: 'postgres'
+    image: postgres
+    networks:
+      - todobackend-network
+      
+networks:
+  todobackend-network:
+    driver: bridge
+
+volumes:
+  todobackend-db-data:

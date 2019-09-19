@@ -1,13 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using backend.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
+using System.IO;
+using System.Reflection;
 
-namespace todobackend
+namespace backend
 {
     public class Startup
     {
@@ -21,6 +26,7 @@ namespace todobackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DataBaseContext>(options => options.UseNpgsql(Configuration.GetConnectionString("MigrationConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddApiVersioning(
                 options =>
@@ -39,11 +45,20 @@ namespace todobackend
                     options.SubstituteApiVersionInUrl = true;
                 });
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-            services.AddSwaggerGen();
+            //services.AddSwaggerGen();
+            services.AddSwaggerGen(
+                options =>
+                {
+                    // add a custom operation filter which sets default values
+                    options.OperationFilter<SwaggerDefaultValues>();
+
+                    // integrate xml comments
+                    options.IncludeXmlComments(XmlCommentsFilePath);
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider, DataBaseContext context)
         {
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -59,7 +74,16 @@ namespace todobackend
                     }
                     options.RoutePrefix = string.Empty;
                 });
+            context.Database.Migrate();
             app.UseMvc();
+        }
+        
+        static string XmlCommentsFilePath {
+            get {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                return xmlPath;
+            }
         }
     }
 }

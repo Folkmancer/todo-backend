@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  todobackend:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - CUSTOMCONNSTR_MigrationConnection=User ID=app;Password=app;Server=postgres;Port=5432;Database=mydbname;Integrated Security=true;Pooling=true;
+    ports:
+      - "63647:80"
+
+  postgres:
+    restart: always
+    environment:
+      - POSTGRES_USER=app
+      - POSTGRES_PASSWORD=app
+      - POSTGRES_DB=mydbname
+    ports:
+      - 5432:5432
+    volumes:
+      - todobackend-db-data:/var/lib/postgresql/data
