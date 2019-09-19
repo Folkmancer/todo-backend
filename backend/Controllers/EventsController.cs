@@ -72,16 +72,15 @@ namespace backend.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(EventView), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<EventView>> Create(EventView eventItem, ApiVersion apiVersion)
+        public async Task<ActionResult<EventView>> Create(NewEvent eventItem, ApiVersion apiVersion)
         {
             if (eventItem == null)
             {
                 return BadRequest();
             }
-            eventItem.Id = Guid.NewGuid();
-            dataBaseContext.Events.Add(new Event(eventItem));
+            var result = dataBaseContext.Events.Add(new Event(eventItem));
             await dataBaseContext.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetById), new { id = eventItem.Id, version = apiVersion.ToString() }, eventItem);
+            return CreatedAtAction(nameof(GetById), new { id = result.Entity.Id, version = apiVersion.ToString() }, eventItem);
         }
 
         /// <summary>
@@ -94,17 +93,16 @@ namespace backend.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateById(Guid id, EventView eventItem)
+        public async Task<IActionResult> UpdateById(Guid id, NewEvent eventItem)
         {
             if (dataBaseContext.Events.Count() == 0)
             {
                 return NoContent();
             }
-            if (id != eventItem.Id)
+            if (!dataBaseContext.Events.Any(x => x.Id == id))
             {
                 return BadRequest();
             }
-            eventItem.Id = id;
             dataBaseContext.Entry(new Event(eventItem)).State = EntityState.Modified;
             await dataBaseContext.SaveChangesAsync();
             return Ok();
