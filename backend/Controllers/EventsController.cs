@@ -29,7 +29,7 @@ namespace backend.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<EventView>>> GetAllEvents(int? page = 1, int size = 5)
+        public async Task<ActionResult<IEnumerable<EventView>>> GetAllEvents(int page = 1, int size = 5)
         {
             if (dataBaseContext.Events.Count() == 0)
             {
@@ -74,11 +74,7 @@ namespace backend.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<EventView>> Create(NewEvent eventItem, ApiVersion apiVersion)
         {
-            if (eventItem == null)
-            {
-                return BadRequest();
-            }
-            var result = dataBaseContext.Events.Add(new Event(eventItem));
+            var result = dataBaseContext.Events.Add(eventItem.ToEvent());
             await dataBaseContext.SaveChangesAsync();
             return CreatedAtAction(nameof(GetById), new { id = result.Entity.Id, version = apiVersion.ToString() }, eventItem);
         }
@@ -103,7 +99,7 @@ namespace backend.Controllers
             {
                 return BadRequest();
             }
-            dataBaseContext.Entry(new Event(eventItem)).State = EntityState.Modified;
+            dataBaseContext.Entry(eventItem.ToEvent()).State = EntityState.Modified;
             await dataBaseContext.SaveChangesAsync();
             return Ok();
         }
