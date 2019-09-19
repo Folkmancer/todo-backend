@@ -29,17 +29,17 @@ namespace backend.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<EventView>>> GetAllEvents(int? page = null, int? size = 5)
+        public async Task<ActionResult<IEnumerable<EventView>>> GetAllEvents(int? page = 1, int size = 5)
         {
             if (dataBaseContext.Events.Count() == 0)
             {
                 return NotFound();
             }
-            if (!page.HasValue)
-            {
-                return await dataBaseContext.Events.Select(x => new EventView(x)).ToListAsync();
-            }
-            return await dataBaseContext.Events.Skip(((int)page - 1) * (int)size).Take((int)size).Select(x => new EventView(x)).ToListAsync();
+            return await dataBaseContext.Events
+                .OrderByDescending(x => x.DeadlineDate)
+                .Skip(((int)page - 1) * (int)size).Take((int)size)
+                .Select(x => new EventView(x))
+                .ToListAsync();
         }
 
         /// <summary>
