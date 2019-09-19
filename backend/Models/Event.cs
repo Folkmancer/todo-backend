@@ -17,9 +17,9 @@ namespace backend.Models
         public bool IsComplete { get; set; }
 
         public Event() { }
-        public Event(EventView element)
+
+        public Event(NewEvent element)
         {
-            this.Id = element.Id;
             this.Description = element.Description;
             this.DeadlineDate = (element.DeadlineDate.HasValue) ? DateTimeOffset.FromUnixTimeSeconds(element.DeadlineDate.Value) : default;
             this.IsComplete = this.IsComplete;
