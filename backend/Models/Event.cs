@@ -15,14 +15,5 @@ namespace backend.Models
         public DateTimeOffset? DeadlineDate { get; set; }
         [DefaultValue(false)]
         public bool IsComplete { get; set; }
-
-        public Event() { }
-
-        public Event(NewEvent element)
-        {
-            this.Description = element.Description;
-            this.DeadlineDate = (element.DeadlineDate.HasValue) ? DateTimeOffset.FromUnixTimeSeconds(element.DeadlineDate.Value) : default;
-            this.IsComplete = this.IsComplete;
-        }
     }
 }
