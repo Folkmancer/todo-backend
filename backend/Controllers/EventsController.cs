@@ -87,19 +87,18 @@ namespace backend.Controllers
         /// <returns>Status code</returns>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateById(Guid id, NewEvent eventItem)
         {
-            if (dataBaseContext.Events.Count() == 0)
+            var oldEvent = await dataBaseContext.Events.FindAsync(id);
+            if (oldEvent == null)
             {
-                return NoContent();
+                return NotFound();
             }
-            if (!dataBaseContext.Events.Any(x => x.Id == id))
-            {
-                return BadRequest();
-            }
-            dataBaseContext.Entry(eventItem.ToEvent()).State = EntityState.Modified;
+            var updateEvent = eventItem.ToEvent();
+            oldEvent.Description = updateEvent.Description;
+            oldEvent.DeadlineDate = updateEvent.DeadlineDate;
+            oldEvent.IsComplete = updateEvent.IsComplete;
             await dataBaseContext.SaveChangesAsync();
             return Ok();
         }
@@ -111,14 +110,9 @@ namespace backend.Controllers
         /// <returns>Status code</returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteById(Guid id)
         {
-            if (dataBaseContext.Events.Count() == 0)
-            {
-                return NoContent();
-            }
             var eventItem = await dataBaseContext.Events.FindAsync(id);
             if (eventItem == null)
             {
