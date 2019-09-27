@@ -88,17 +88,14 @@ namespace backend.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateById(Guid id, NewEvent eventItem)
+        public async Task<IActionResult> UpdateById(Guid id, UpdateEvent eventItem)
         {
             var oldEvent = await dataBaseContext.Events.FindAsync(id);
             if (oldEvent == null)
             {
                 return NotFound();
             }
-            var updateEvent = eventItem.ToEvent();
-            oldEvent.Description = updateEvent.Description;
-            oldEvent.DeadlineDate = updateEvent.DeadlineDate;
-            oldEvent.IsComplete = updateEvent.IsComplete;
+            eventItem.Fill(oldEvent);
             await dataBaseContext.SaveChangesAsync();
             return Ok();
         }
