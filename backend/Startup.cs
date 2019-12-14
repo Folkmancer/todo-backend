@@ -1,11 +1,11 @@
 ﻿using backend.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System;
@@ -27,7 +27,7 @@ namespace backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataBaseContext>(options => options.UseNpgsql(Configuration.GetConnectionString("MigrationConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddControllers();
             services.AddApiVersioning(
                 options =>
                 {
@@ -58,8 +58,13 @@ namespace backend
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider, DataBaseContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider, DataBaseContext context)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
@@ -75,7 +80,14 @@ namespace backend
                     options.RoutePrefix = string.Empty;
                 });
             context.Database.Migrate();
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
         
         static string XmlCommentsFilePath {
